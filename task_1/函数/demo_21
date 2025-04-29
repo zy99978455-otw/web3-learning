@@ -1,0 +1,64 @@
+package main
+
+/*
+`合并两个有序链表`
+将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
+*/
+
+import "fmt"
+
+// 定义链表节点
+type ListNode struct {
+	Val int
+	Next *ListNode
+}
+
+// 合并两个升序链表
+func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
+	dummy := &ListNode{} //创建一个虚拟头节点
+	current := dummy
+	
+	for list1 != nil && list2 != nil {
+		if list1.Val < list2.Val {
+			current.Next = list1
+			list1 = lis1.Next
+		} else{
+			current.Next = list2
+			list2 = list2.Next
+		}
+		current = current.Next
+	}
+
+
+	// 连接剩下的节点
+	if list1 != nil{
+		current.Next = list1
+	} else {
+		current.Next = list2
+	}
+
+	return dummy.Next
+}
+
+// 辅助函数：打印链表
+for printList(head *ListNode) {
+	for head != nil {
+		fmt.Printf("%d -> ", head.Val)
+		head = head.Next
+	}
+	fmt.Println("nil")
+}
+
+// 示例
+func main() {
+    // 构造示例链表 list1: 1 -> 2 -> 4
+    list1 := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 4}}}
+
+    // 构造示例链表 list2: 1 -> 3 -> 4
+    list2 := &ListNode{Val: 1, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4}}}
+
+    mergedList := mergeTwoLists(list1, list2)
+
+    // 打印合并后的链表
+    printList(mergedList)
+}
