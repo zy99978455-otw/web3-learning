@@ -1,0 +1,48 @@
+package main
+
+/*
+`全排列`
+给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+*/
+
+import "fmt"
+
+// permute返回nums的所有全排列
+func permute(nums []int) [][]int {
+	var res [][]int
+	var path []int
+	used := make([]bool, len(nums))
+
+	var backtrack func()
+	backtrack = func() {
+		if len(path) == len(nums) {
+			//需要复制一份path，因为path是引用类型
+			temp := make([]int, len(path))
+			copy(temp, path)
+			res = append(res, temp)
+			return
+		}
+
+		for i := 0; i < len(nums); i++ {
+			if used[i] {
+				continue
+			}
+			used[i] = true
+			path = append(path, nums[i])
+			backtrack()
+			path = path[:len(path)-1]
+			used[i] = false
+		}
+	}
+
+	backtrack()
+	return res
+}
+
+func main() {
+	nums := []int{1, 2, 3}
+	permutations := permute(nums)
+	for _, p := range permutations {
+		fmt.Println(p)
+	}
+}
